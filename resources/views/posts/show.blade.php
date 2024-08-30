@@ -11,7 +11,7 @@ Show Post
 
     <div class="card-body">
         @if ($post->image)
-            <img src="{{asset("images/posts/{$post->image}")}}" width="250" height="250" class="mb-3">
+            <img src="{{asset("images/posts/{$post->image}")}}" width="250" height="250" class="mb-3 my-auto">
         @endif
         <blockquote class="blockquote mb-0">
         <h4><strong>Title:-</strong><br> {{$post->title}}</h4>
@@ -21,12 +21,11 @@ Show Post
         </p>
         <br>
         <footer class="blockquote-footer float-start">
-            Posted By: <cite title="posted_by">{{$post->creator->name}}</cite>
+            Posted By: <cite>{{$post->creator->name}}</cite>
             <br>
-            Created At: {{ \Carbon\Carbon::parse($post->created_at)->format('Y-m-d') }}
+            Created At: {{ $post->created_at }}
             <br>
-
-            Updated From {{ $post->updated_at->diffForHumans() }}
+            Updated In {{ $post->updatedAt }}
         </footer>
         </blockquote>
     </div>
@@ -53,10 +52,8 @@ Show Post
     </div>
 
     <div class="createComment">
-        <form action="{{route('comments.store')}}" method="POST">
+        <form action="{{route('comments.store', ['post_id' => $post->id])}}" method="POST">
             @csrf
-            <input type="hidden" name="post_id" value="{{$post->id}}">
-            <input type="hidden" name="creator_id" value="{{$post->creator_id}}">
             <div class="mt-5 mb-3">
                 <textarea class="form-control" style="resize: none;" placeholder="Enter your comment" id="commentContent" name="content" rows="4"></textarea>
             </div>

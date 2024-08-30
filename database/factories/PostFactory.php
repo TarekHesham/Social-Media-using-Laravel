@@ -20,7 +20,7 @@ class PostFactory extends Factory
             'title' => $this->faker->sentence(),
             'description' => $this->faker->paragraph(),
             'image' => $this->faker->imageUrl(),
-            'creator_id' => $this->faker->numberBetween(1, 10)
+            'user_id' => $this->faker->numberBetween(1, 10)
         ];
     }
 }

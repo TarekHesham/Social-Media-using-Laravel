@@ -3,7 +3,9 @@
 
 @section('content')
   <h1>Create Post</h1>
-
+  @if (Auth::user()->posts->count() >= 3)
+    <div class="alert alert-danger">You can't create more than 3 posts</div>
+  @endif
   <form action="{{route('posts.store')}}" method="POST" enctype="multipart/form-data">
     @csrf
     <div class="mb-3">
@@ -23,27 +25,12 @@
     <div class="mb-3">
       <label for="image" class="form-label">Image</label>
       <input type="file" class="form-control" id="image" name="image">
-      @if (isset($post->image))
-        <img src="{{asset("images/posts/{$post->image}")}}" width="50" height="50">
-      @endif
 
       @error('image')
         <div class="alert alert-danger">{{ $message }}</div>
       @enderror
     </div>
-    <div class="mb-3">
-      <label for="creator_id" class="form-label">Post Creator</label>
-      <select name="creator_id" id="creator_id">
-        @foreach($creators as $creator)
-          <option value="{{$creator->id}}" {{ old('creator_id') == $creator ? 'selected' : '' }}>{{$creator->name}}</option>
-        @endforeach
-      </select>
-      @error('creator_id')
-        <div class="alert alert-danger">{{ $message }}</div>
-      @enderror
-    </div>
 
-    
     <button type="submit" class="btn btn-primary float-end">Submit</button>
   </form>
 @endsection

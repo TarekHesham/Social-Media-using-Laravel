@@ -12,9 +12,9 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('posts', function (Blueprint $table) {
-            $table->foreignId("creator_id")
+            $table->foreignId("user_id")
                 ->nullable()
-                ->constrained("creators")
+                ->constrained("users")
                 ->onDelete("cascade")
                 ->onUpdate("cascade");
         });
@@ -27,9 +27,9 @@ return new class extends Migration
     {
         Schema::table('posts', function (Blueprint $table) {
             // first drop index
-            $table->dropForeign("posts_creator_id_foreign");
+            $table->dropForeign("posts_user_id_foreign");
             // then drop column
-            $table->dropColumn("creator_id");
+            $table->dropColumn("user_id");
         });
     }
 };

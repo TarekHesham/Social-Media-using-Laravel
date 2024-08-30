@@ -2,19 +2,19 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Creator;
+use App\Models\User;
 use App\Models\Post;
 use Illuminate\Http\Request;
 
-class CreatorController extends Controller
+class UserController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        $creators = Creator::paginate(6);
-        return view('creators.index', compact('creators'));
+        $users = User::paginate(6);
+        return view('users.index', compact('users'));
     }
 
     /**
@@ -22,8 +22,7 @@ class CreatorController extends Controller
      */
     public function create()
     {
-        $posts = Post::all();
-        return view('posts.create', compact('posts'));
+        return view('posts.create');
     }
 
     /**
@@ -48,7 +47,7 @@ class CreatorController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Creator $creator)
+    public function show(User $user)
     {
         //
     }
@@ -56,7 +55,7 @@ class CreatorController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Creator $creator)
+    public function edit(User $user)
     {
         //
     }
@@ -64,7 +63,7 @@ class CreatorController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Creator $creator)
+    public function update(Request $request, User $user)
     {
         //
     }
@@ -72,7 +71,7 @@ class CreatorController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Creator $creator)
+    public function destroy(User $user)
     {
         //
     }

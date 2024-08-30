@@ -2,7 +2,9 @@
 
 namespace App\Http\Requests;
 
+use App\Rules\MaxPostsPerUser;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Facades\Auth;
 
 class StorePostRequest extends FormRequest
 {
@@ -11,7 +13,11 @@ class StorePostRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return true;
+        if (Auth::check()) {
+            return true;
+        }
+
+        return false;
     }
 
     /**
@@ -24,10 +30,7 @@ class StorePostRequest extends FormRequest
         return [
             "title" => "required|min:3|unique:posts,title",
             "description" => "required|min:10",
-            "creator_id" => [
-                'required',
-                'exists:creators,id'
-            ]
+            "image" => "image|mimes:jpeg,jpg,png|max:2048"
         ];
     }
 
@@ -39,7 +42,6 @@ class StorePostRequest extends FormRequest
             "description.required" => "The description field is required.",
             "description.string" => "The description must be a string.",
             "description.min" => "The description must be at least 10 characters.",
-            "creator_id.required" => "The creator field is required."
         ];
     }
 }

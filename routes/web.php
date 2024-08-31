@@ -27,19 +27,22 @@ Route::get('/auth/redirect/github', function () {
 })->name('github-login');
 
 Route::get('/auth/callback/github', function () {
-  $user = Socialite::driver('github')->stateless()->user();
+  $githubUser = Socialite::driver('github')->user();
+  $user = User::where('email', $githubUser->email)->first();
 
-  $user = User::updateOrCreate([
-    'github_id' => $user->id,
-  ], [
-    'name' => $user->name,
-    'email' => $user->email,
-    'image' => $user->avatar,
-    'password' => $user->token,
-    'github_token' => $user->token,
-    'github_refresh_token' => $user->refreshToken,
-    'github_expires_at' => $user->expiresIn,
-  ]);
+  if (!$user) {
+    $user = User::updateOrCreate([
+      'github_id' => $githubUser->id,
+    ], [
+      'name' => $githubUser->name,
+      'email' => $githubUser->email,
+      'image' => $githubUser->avatar,
+      'password' => $githubUser->token,
+      'github_token' => $githubUser->token,
+      'github_refresh_token' => $githubUser->refreshToken,
+      'github_expires_at' => $githubUser->expiresIn,
+    ]);
+  }
 
   Auth::login($user);
 
@@ -52,7 +55,7 @@ Route::get('/auth/redirect/google', function () {
 })->name('google-login');
 
 Route::get('/auth/callback/google', function () {
-  $googleUser = Socialite::driver('google')->stateless()->user();
+  $googleUser = Socialite::driver('google')->user();
   $user = User::where('email', $googleUser->email)->first();
 
   if (!$user) {

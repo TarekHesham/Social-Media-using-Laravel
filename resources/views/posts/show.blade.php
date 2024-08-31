@@ -37,7 +37,7 @@ Show Post
         @foreach ($post->comments as $comment)
             <div class="comment mb-3 p-3 rounded shadow bg-light">
                 <div class="d-flex align-items-center">
-                    <img src="{{Str::startsWith($comment->creator->image, 'https') ? $comment->creator->image : asset("images/users/{$comment->creator->image}")}}" alt="Avatar" class="image" style="width: 20px; height: 20px; border-radius: 50%;">
+                    <img src="{{Str::startsWith($comment->creator->image, 'https') ? $comment->creator->image : asset("images/users/{$comment->creator->image}")}}" alt="Avatar" class="image" style="width: 25px; height: 25px; border-radius: 50%;">
                     <h5 class="m-0 ms-1">{{$comment->creator->name}}</h5>
                 </div>
                 <p class="m-0 mt-1">{{$comment->content}}</p>

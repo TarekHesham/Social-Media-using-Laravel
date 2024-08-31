@@ -4,6 +4,7 @@ namespace App\Http\Resources;
 
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
+use Illuminate\Support\Str;
 
 class PostResource extends JsonResource
 {
@@ -19,7 +20,7 @@ class PostResource extends JsonResource
             'id' => $this->id,
             'title' => $this->title,
             'description' => $this->description,
-            'image' => $this->image ? asset("images/posts/{$this->image}") : null,
+            'image' => Str::startsWith($this->image, 'https') ? $this->image : asset("images/posts/{$this->image}"),
             'creator' => new UserResource($this->creator),
             'comments' => CommentResource::collection($this->comments),
             'created_at' => $this->created_at,

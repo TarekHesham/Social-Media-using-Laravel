@@ -36,14 +36,10 @@ Route::post('/sanctum/token', function (Request $request) {
     return $user->createToken($request->device_name)->plainTextToken;
 });
 
-// First token -> 1|1hPAak8lVz6QkM3HssrYM0XULIqzwYKhSbI83c9Yb4bcdcbc
-// 2|vC1KRskorYnUhFrdBOaYcWWdtawIj5j1Au2IDkvI96c981af
-
 route::post("/sanctum/logout", function () {
     $user = Auth::user();
-    // @intelephense-ignore-next-line
+
     if ($user && $user->currentAccessToken()) {
-        // @intelephense-ignore-next-line
         $user->currentAccessToken()->delete();
         return response()->json(['message' => 'Logged out successfully'], 200);
     }

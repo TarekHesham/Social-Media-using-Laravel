@@ -67,8 +67,13 @@
 
                         <div class="row mb-0">
                             <div class="col-md-8 offset-md-4">
-                                <a href="{{ route('github-login') }}" class="btn btn-dark">
+                                <a href="{{ route('github-login') }}" class="btn btn-dark fw-bold rounded-1">
                                     <i class="fa-brands fa-github"></i> Login with GitHub
+                                </a>
+                            </div>
+                            <div class="col-md-8 offset-md-4 mt-3">
+                                <a href="{{ route('google-login') }}" class="btn btn-primary fw-bold rounded-1">
+                                    <i class="fa-brands fa-google"></i> Login with Google
                                 </a>
                             </div>
                         </div>

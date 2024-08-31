@@ -22,7 +22,7 @@ Route::resource("comments", CommentController::class)->middleware("auth");
 // Login with GitHub
 use Laravel\Socialite\Facades\Socialite;
 
-Route::get('/auth/redirect', function () {
+Route::get('/auth/redirect/github', function () {
   return Socialite::driver('github')->redirect();
 })->name('github-login');
 
@@ -38,7 +38,36 @@ Route::get('/auth/callback/github', function () {
     'password' => $user->token,
     'github_token' => $user->token,
     'github_refresh_token' => $user->refreshToken,
+    'github_expires_at' => $user->expiresIn,
   ]);
+
+  Auth::login($user);
+
+  return redirect('/');
+});
+
+// Login with Google
+Route::get('/auth/redirect/google', function () {
+  return Socialite::driver('google')->redirect();
+})->name('google-login');
+
+Route::get('/auth/callback/google', function () {
+  $googleUser = Socialite::driver('google')->stateless()->user();
+  $user = User::where('email', $googleUser->email)->first();
+
+  if (!$user) {
+    $user = User::updateOrCreate([
+      'google_id' => $googleUser->id,
+    ], [
+      'name' => $googleUser->name,
+      'email' => $googleUser->email,
+      'image' => $googleUser->avatar,
+      'password' => $googleUser->token,
+      'google_token' => $googleUser->token,
+      'google_refresh_token' => $googleUser->refreshToken,
+      'google_token_expires_in' => $googleUser->expiresIn,
+    ]);
+  }
 
   Auth::login($user);
 

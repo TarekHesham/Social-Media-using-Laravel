@@ -36,17 +36,12 @@ Show Post
     <div class="comments">
         @foreach ($post->comments as $comment)
             <div class="comment mb-3 p-3 rounded shadow bg-light">
-                <h5>{{$comment->creator->name}}</h5>
-                <p class="m-0">{{$comment->content}}</p>
+                <div class="d-flex align-items-center">
+                    <img src="{{Str::startsWith($comment->creator->image, 'https') ? $comment->creator->image : asset("images/users/{$comment->creator->image}")}}" alt="Avatar" class="image" style="width: 20px; height: 20px; border-radius: 50%;">
+                    <h5 class="m-0 ms-1">{{$comment->creator->name}}</h5>
+                </div>
+                <p class="m-0 mt-1">{{$comment->content}}</p>
                 <small class="text-muted">{{$comment->created_at->diffForHumans()}}</small>
-                {{-- <div class="actions gap-2">
-                    <a href="{{route('comments.edit', $comment->id)}}" class="btn btn-secondary float-end">Edit</a>
-                    <form action="{{route('comments.destroy', $comment->id)}}" method="post">
-                        @csrf
-                        @method('DELETE')
-                        <button type="submit" class="btn btn-danger float-end">Delete</button>
-                    </form>
-                </div> --}}
             </div>
         @endforeach
     </div>
@@ -65,7 +60,7 @@ Show Post
         </form>
     </div>
 </section>
-
+{{-- 
 <script>
     const commentContent = document.getElementById('commentContent');
     commentContent.addEventListener('keyup', function(e) {
@@ -74,5 +69,5 @@ Show Post
             document.querySelector('.createComment form').submit();
         }
     });
-</script>
+</script> --}}
 @endsection

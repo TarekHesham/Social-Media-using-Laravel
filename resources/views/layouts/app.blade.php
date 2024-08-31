@@ -62,9 +62,10 @@
                             @endif
                         @else
                             <li class="nav-item dropdown d-flex">
-                                @if (Auth::user()->image)
-                                    <img src="/images/users/{{ Auth::user()->image }}" alt="Avatar" class="image" style="width: 40px; height: 40px; border-radius: 50%;" >
-                                @endif
+                            @if (Auth::user()->image)
+                                <img src="{{ Str::startsWith(Auth::user()->image, 'https') ? Auth::user()->image : '/images/users/' . Auth::user()->image }}" alt="Avatar" class="image" style="width: 40px; height: 40px; border-radius: 50%;">
+                            @endif
+                            
                                 <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                                     {{ Auth::user()->name }}
                                 </a>

@@ -68,7 +68,7 @@
                         <div class="row mb-0">
                             <div class="col-md-8 offset-md-4">
                                 <a href="{{ route('github-login') }}" class="btn btn-dark">
-                                    Login with GitHub
+                                    <i class="fa-brands fa-github"></i> Login with GitHub
                                 </a>
                             </div>
                         </div>
